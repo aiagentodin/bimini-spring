@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bimini Spring — Medical Weight Loss</title>
+<!-- CHANGE: Update page title above -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   CSS VARIABLES — Theme System
+   ═══════════════════════════════════════════ */
+:root {
+  --primary: #1B4965;
+  --primary-dark: #0f2d40;
+  --secondary: #62B6CB;
+  --accent: #F4845F;
+  --accent-hover: #e06a42;
+  --gold: #C6A673;
+  --bg: #FFFFFF;
+  --bg-warm: #FAF7F2;
+  --bg-mint: #f1f5e9;
+  --bg-sand: #f5eee9;
+  --bg-sky: #e9f5f5;
+  --bg-smoke: #fafafa;
+  --text: #38312c;
+  --text-light: #6B7280;
+  --text-white: #FFFFFF;
+  --success: #779d7c;
+  --star: #FBBF24;
+  --radius-sm: 20px;
+  --radius-md: 40px;
+  --radius-pill: 50px;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Red Hat Text', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--primary); text-decoration: none; }
+h1 { font-size: 50px; font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; }
+h2 { font-size: 30px; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+h3 { font-size: 20px; font-weight: 600; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translate3d(0, 35px, 0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* CTA Button */
+.cta-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--text-white);
+  padding: 18px 48px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.cta-btn:hover {
+  transform: translate(0, -4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+  background: var(--accent-hover);
+  color: var(--text-white);
+}
+.cta-btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.cta-btn-outline:hover {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+/* ═══════════════════════════════════════════
+   1. STICKY NAVIGATION
+   ═══════════════════════════════════════════ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+.navbar.scrolled {
+  background: var(--bg);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  padding: 14px 0;
+}
+.navbar .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-logo {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px 5%;
+}
+.nav-logo img {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  max-width: 600px;
+  height: auto;
+  background: transparent;
+}
+.nav-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: var(--text-white);
+  padding: 12px 32px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.nav-cta:hover {
+  transform: translate(0, -3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  color: var(--text-white);
+}
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 24px;
+  position: relative;
+}
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
+}
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.hamburger span:nth-child(3) { bottom: 0; }
+
+@media (max-width: 768px) {
+  .hamburger { display: block; }
+  .nav-cta { display: none; }
+  .nav-cta.mobile-show { display: block; }
+}
+
+/* ═══════════════════════════════════════════
+   2. HERO SECTION
+   ═══════════════════════════════════════════ */
+.hero {
+  padding: 160px 0 80px;
+  background: linear-gradient(180deg, var(--bg-mint) 0%, var(--bg) 100%);
+  text-align: center;
+}
+.hero-pre {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.hero h1 {
+  max-width: 700px;
+  margin: 0 auto 32px;
+  color: var(--primary-dark);
+}
+.hero-checks {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 32px;
+  margin-bottom: 40px;
+}
+.hero-checks li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text);
+}
+.hero-checks .check-icon {
+  width: 28px; height: 28px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Photo Grid */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 150px 241px 300px;
+  gap: 16px;
+  margin-top: 60px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.photo-grid-item {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-light);
+  position: relative;
+}
+.photo-grid-item .silhouette {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  opacity: 0.6;
+}
+.pg-1 { background: var(--bg-mint); grid-column: 1; grid-row: 1 / 3; }
+.pg-2 { background: var(--bg-sand); grid-column: 2; grid-row: 1; }
+.pg-3 { background: var(--bg-sky); grid-column: 3; grid-row: 1 / 2; }
+.pg-4 { background: var(--bg-warm); grid-column: 4 / 6; grid-row: 1; }
+.pg-5 { background: var(--bg-sky); grid-column: 2 / 4; grid-row: 2 / 4; }
+.pg-6 { background: var(--bg-sand); grid-column: 4; grid-row: 2; }
+.pg-7 { background: var(--bg-mint); grid-column: 5; grid-row: 2 / 4; }
+.pg-8 { background: var(--bg-warm); grid-column: 1; grid-row: 3; }
+.pg-9 { background: #f0e8f5; grid-column: 4; grid-row: 3; }
+
+@media (max-width: 768px) {
+  .hero { padding: 120px 0 60px; }
+  .hero h1 { font-size: 32px; }
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 150px 150px 150px;
+  }
+  .pg-1 { grid-column: 1; grid-row: 1; }
+  .pg-2 { grid-column: 2; grid-row: 1; }
+  .pg-3 { grid-column: 1; grid-row: 2; }
+  .pg-4 { grid-column: 2; grid-row: 2; }
+  .pg-5 { grid-column: 1 / 3; grid-row: 3; }
+  .pg-6, .pg-7, .pg-8, .pg-9 { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   3. LOGO SLIDER
+   ═══════════════════════════════════════════ */
+.logo-slider {
+  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
+  padding: 32px 0;
+  overflow: hidden;
+  position: relative;
+}
+.logo-slider::before,
+.logo-slider::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+.logo-slider::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
+}
+.logo-slider::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg) 0%, transparent 100%);
+}
+.logo-track {
+  display: flex;
+  gap: 80px;
+  animation: logoScroll 25s linear infinite;
+  width: max-content;
+}
+.logo-track span {
+  font-size: 18px;
+  font-weight: 600;
+  color: #c0c0c0;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+@keyframes logoScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════
+   4. PRODUCT CARDS
+   ═══════════════════════════════════════════ */
+.products {
+  padding: 200px 0 100px;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.section-header p {
+  color: var(--text-light);
+  margin-top: 12px;
+  font-size: 15px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.product-scroll {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px 24px 40px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.product-scroll::-webkit-scrollbar { display: none; }
+.product-card {
+  min-width: 330px;
+  max-width: 376px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  padding: 40px 32px;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+}
+.product-card.bg-sand { background: var(--bg-sand); }
+.product-card.bg-mint { background: var(--bg-mint); }
+.product-card.bg-sky { background: var(--bg-sky); }
+.product-card.bg-warm { background: var(--bg-warm); }
+.product-img {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  margin-bottom: 24px;
+}
+.product-card h3 { margin-bottom: 8px; }
+.product-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+.product-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.product-tags span {
+  background: rgba(255,255,255,0.7);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+/* ═══════════════════════════════════════════
+   5. RESULTS CAROUSEL
+   ═══════════════════════════════════════════ */
+.results {
+  padding: 200px 0 100px;
+  background: var(--bg-warm);
+  overflow: hidden;
+}
+.results-track-wrapper {
+  overflow: hidden;
+  margin-top: 60px;
+}
+.results-track {
+  display: flex;
+  gap: 24px;
+  animation: resultsScroll 35s linear infinite;
+  width: max-content;
+}
+@keyframes resultsScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.result-card {
+  min-width: 280px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+.result-photo {
+  width: 100%;
+  height: 200px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--bg-mint), var(--bg-sky));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+.result-card h4 { margin-bottom: 4px; }
+.result-card .lost {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.result-stats {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.result-stats li {
+  font-size: 13px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.result-stats li::before {
+  content: '✓';
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════
+   6. FEATURED TESTIMONIAL
+   ═══════════════════════════════════════════ */
+.testimonial-featured {
+  padding: 200px 0;
+  text-align: center;
+}
+.testimonial-stars {
+  font-size: 32px;
+  margin-bottom: 24px;
+  letter-spacing: 4px;
+}
+.testimonial-quote {
+  font-size: 28px;
+  font-weight: 500;
+  max-width: 700px;
+  margin: 0 auto 16px;
+  line-height: 1.4;
+  color: var(--primary-dark);
+}
+.testimonial-subtext {
+  color: var(--text-light);
+  font-size: 15px;
+  margin-bottom: 48px;
+}
+.testimonial-product {
+  width: 280px;
+  height: 320px;
+  border-radius: var(--radius-md);
+  background: var(--bg-warm);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+}
+
+@media (max-width: 768px) {
+  .testimonial-quote { font-size: 22px; }
+}
+
+/* ═══════════════════════════════════════════
+   7. WEIGHT CALCULATOR
+   ═══════════════════════════════════════════ */
+.calculator {
+  padding: 200px 0;
+  background: var(--bg);
+}
+.calc-intro {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.calc-intro p {
+  color: var(--text-light);
+  margin-top: 12px;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.calc-box {
+  background: var(--bg-smoke);
+  border-radius: var(--radius-pill);
+  padding: 70px 60px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.calc-label {
+  font-size: 15px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.calc-weight-display {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 24px;
+}
+.calc-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: #ddd;
+  border-radius: 3px;
+  outline: none;
+  margin-bottom: 40px;
+}
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--gold);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.calc-slider::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--gold);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.calc-slider::-webkit-slider-runnable-track {
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold) var(--slider-pct, 50%), #ddd var(--slider-pct, 50%));
+  border-radius: 3px;
+}
+.calc-result-label {
+  font-size: 15px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.calc-result-num {
+  font-size: 70px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+.calc-result-sub {
+  color: var(--text-light);
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .calc-box { padding: 40px 24px; border-radius: 32px; }
+  .calc-result-num { font-size: 50px; }
+}
+
+/* ═══════════════════════════════════════════
+   8. THE CHANGE SECTION
+   ═══════════════════════════════════════════ */
+.the-change {
+  padding: 200px 0 100px;
+  background: var(--bg-mint);
+}
+.change-stats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+.change-stat {
+  text-align: center;
+}
+.change-stat .num {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.03em;
+}
+.change-stat .label {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.change-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 180px 200px;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.cg-item {
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--text-light);
+  overflow: hidden;
+}
+.cg-item .silhouette { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0.6; }
+.cg-1 { background: var(--bg-sand); grid-column: 1 / 3; }
+.cg-2 { background: var(--bg-sky); }
+.cg-3 { background: var(--bg-warm); }
+.cg-4 { background: #f0e8f5; }
+.cg-5 { background: var(--bg-sand); grid-column: 2 / 4; }
+.cg-6 { background: var(--bg-mint); }
+
+@media (max-width: 768px) {
+  .change-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 150px); }
+  .cg-1, .cg-5 { grid-column: auto; }
+}
+
+/* ═══════════════════════════════════════════
+   9. STATS GRID
+   ═══════════════════════════════════════════ */
+.stats-grid-section {
+  padding: 200px 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.stat-box {
+  background: var(--bg-smoke);
+  border-radius: var(--radius-md);
+  padding: 48px 32px;
+  text-align: center;
+}
+.stat-box .stat-num {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.03em;
+}
+.stat-box .stat-label {
+  color: var(--text-light);
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════════════════════════════════════
+   10. 3-STEP JOURNEY
+   ═══════════════════════════════════════════ */
+.journey {
+  padding: 200px 0;
+  background: var(--bg-warm);
+}
+.journey-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 60px;
+}
+.journey-card {
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.journey-card-img {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+.journey-card-img.bg-mint { background: var(--bg-mint); }
+.journey-card-img.bg-sand { background: var(--bg-sand); }
+.journey-card-img.bg-sky { background: var(--bg-sky); }
+.journey-card-body {
+  padding: 32px;
+}
+.journey-card-body .step-num {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.journey-card-body h3 { margin-bottom: 8px; }
+.journey-card-body p { color: var(--text-light); font-size: 14px; }
+
+@media (max-width: 768px) {
+  .journey-cards { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   11. SUPPORT / CARE SECTION
+   ═══════════════════════════════════════════ */
+.support {
+  padding: 200px 0;
+}
+.support-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.support-img {
+  width: 100%;
+  height: 400px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--bg-mint), var(--bg-sky));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+}
+.support-text h2 { margin-bottom: 16px; }
+.support-text p { color: var(--text-light); margin-bottom: 32px; line-height: 1.7; }
+
+@media (max-width: 768px) {
+  .support-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   12. EXTENDED REVIEWS
+   ═══════════════════════════════════════════ */
+.reviews {
+  padding: 200px 0;
+  background: var(--bg-smoke);
+  overflow: hidden;
+}
+.reviews-scroll {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 20px 24px 40px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.reviews-scroll::-webkit-scrollbar { display: none; }
+.review-card {
+  min-width: 300px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 32px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.review-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.review-card .stars { color: var(--star); margin-bottom: 12px; font-size: 14px; }
+.review-card .review-name { font-weight: 600; margin-bottom: 4px; }
+.review-card .review-text { color: var(--text-light); font-size: 13px; line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   13. FAQ ACCORDION
+   ═══════════════════════════════════════════ */
+.faq {
+  padding: 200px 0;
+}
+.faq-list {
+  max-width: 750px;
+  margin: 60px auto 0;
+}
+.faq-item {
+  border-bottom: 1px solid #ebebeb;
+}
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 24px 0;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: inherit;
+  color: var(--text);
+}
+.faq-icon {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  opacity: 1;
+}
+.faq-answer p {
+  padding: 0 0 24px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════
+   14. GUARANTEE
+   ═══════════════════════════════════════════ */
+.guarantee {
+  padding: 200px 0;
+  background: var(--bg-warm);
+  text-align: center;
+}
+.guarantee-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 24px;
+}
+.guarantee h2 { margin-bottom: 48px; }
+.guarantee-points {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.guarantee-point {
+  text-align: center;
+}
+.guarantee-point .gp-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.guarantee-point .gp-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .guarantee-points { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════════════════════════════════════
+   15. DOCTORS
+   ═══════════════════════════════════════════ */
+.doctors {
+  padding: 200px 0;
+}
+.doctors-scroll {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  padding: 20px 24px 40px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-top: 60px;
+}
+.doctors-scroll::-webkit-scrollbar { display: none; }
+.doctor-card {
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 220px;
+}
+.doctor-avatar {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+.doctor-card h4 { margin-bottom: 4px; }
+.doctor-card .cred { color: var(--text-light); font-size: 13px; }
+
+/* ═══════════════════════════════════════════
+   16. FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  background: var(--primary-dark);
+  color: var(--text-white);
+  padding: 80px 0 40px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-brand {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.footer p, .footer a { color: rgba(255,255,255,0.7); font-size: 13px; }
+.footer a:hover { color: #fff; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 8px; }
+.footer-contact li {
+  list-style: none;
+  margin-bottom: 8px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 32px;
+  text-align: center;
+}
+.footer-disclaimer {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  max-width: 700px;
+  margin: 16px auto 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   17. STICKY MOBILE CTA
+   ═══════════════════════════════════════════ */
+.mobile-sticky-cta {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--bg);
+  padding: 12px 24px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  z-index: 999;
+  display: none;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.mobile-sticky-cta.show {
+  transform: translateY(0);
+}
+.mobile-sticky-cta .cta-btn {
+  width: 100%;
+  padding: 16px;
+}
+
+@media (max-width: 768px) {
+  .mobile-sticky-cta { display: block; }
+}
+
+/* ═══════════════════════════════════════════
+   18. INTAKE MODAL
+   ═══════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal {
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  padding: 48px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+.modal-overlay.open .modal {
+  transform: scale(1);
+}
+.modal h2 { margin-bottom: 8px; }
+.modal .modal-sub { color: var(--text-light); margin-bottom: 32px; }
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: none; border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-light);
+}
+.modal-field {
+  margin-bottom: 20px;
+}
+.modal-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.modal-field input, .modal-field select {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.modal-field input:focus, .modal-field select:focus {
+  border-color: var(--primary);
+}
+
+/* ═══════════════════════════════════════════
+   THEME SWITCHER
+   ═══════════════════════════════════════════ */
+.theme-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1500;
+  background: var(--bg);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  padding: 16px;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 240px;
+  transform: translateY(calc(100% + 20px));
+  transition: transform 0.3s ease;
+}
+.theme-panel.open {
+  transform: translateY(0);
+}
+.theme-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1501;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+.theme-panel.open ~ .theme-toggle-btn {
+  transform: translateY(calc(-100% - 20px));
+  opacity: 0;
+  pointer-events: none;
+}
+.theme-panel-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 12px;
+  text-align: center;
+  line-height: 1.4;
+}
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: none;
+  background: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.theme-option:hover { background: var(--bg-smoke); }
+.theme-option.active { background: var(--bg-smoke); outline: 2px solid var(--primary); }
+.theme-swatches {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.theme-swatches span {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.theme-option-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+}
+.theme-panel-close {
+  display: block;
+  margin: 8px auto 0;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     1. STICKY NAVIGATION
+     ═══════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <!-- CHANGE: Add logo here -->
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     2. HERO SECTION
+     ═══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container fade-up">
+    <!-- CHANGE: Update pre-header text -->
+    <p class="hero-pre">Doctor-prescribed weight loss medication</p>
+    <!-- CHANGE: Update headline -->
+    <h1>Lose Weight With Science-Backed GLP-1 Medication</h1>
+    <ul class="hero-checks">
+      <!-- CHANGE: Update checklist items -->
+      <li><span class="check-icon">✓</span> FDA-approved medications</li>
+      <li><span class="check-icon">✓</span> Licensed physicians</li>
+      <li><span class="check-icon">✓</span> Delivered to your door</li>
+      <li><span class="check-icon">✓</span> Ongoing medical support</li>
+    </ul>
+    <a href="intake.html" class="cta-btn">Start Your Journey</a>
+  </div>
+
+  <!-- Photo Grid -->
+  <div class="container">
+    <div class="photo-grid fade-up">
+      <!-- CHANGE: Stock photos -->
+      <div class="photo-grid-item pg-1"><img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=800" alt="Happy woman" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-2"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800" alt="Smiling woman" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-3"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800" alt="Confident woman" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-4"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800" alt="Professional woman" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-5"><img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=800" alt="Happy person" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-6"><img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=800" alt="Smiling person" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-7"><img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=800&q=80" alt="Success story" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-8"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800&q=80" alt="Outdoor smile" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="photo-grid-item pg-9"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80" alt="Confidence" style="width:100%;height:100%;object-fit:cover"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     3. LOGO SLIDER
+     ═══════════════════════════════════════════ -->
+<div class="logo-slider">
+  <div class="logo-track" id="logoTrack">
+    <span>Bloomberg</span><span>Forbes</span><span>Healthline</span><span>WebMD</span><span>Fortune</span><span>Fast Company</span><span>NYT</span>
+    <span>Bloomberg</span><span>Forbes</span><span>Healthline</span><span>WebMD</span><span>Fortune</span><span>Fast Company</span><span>NYT</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     4. PRODUCT CARDS
+     ═══════════════════════════════════════════ -->
+<section class="products">
+  <div class="container">
+    <div class="section-header fade-up">
+      <!-- CHANGE: Update section header -->
+      <h2>Trusted by experts, priced for you</h2>
+      <p>Clinically proven GLP-1 medications prescribed by licensed doctors and delivered to your door.</p>
+    </div>
+    <div class="product-scroll">
+      <!-- CHANGE: Update product names, prices, tags -->
+      <div class="product-card bg-sand fade-up">
+        <div class="product-img">💉</div>
+        <h3>Semaglutide</h3>
+        <div class="product-price">$179/mo</div>
+        <div class="product-tags"><span>GLP-1</span><span>Injectable</span><span>Most Popular</span></div>
+      </div>
+      <div class="product-card bg-mint fade-up">
+        <div class="product-img">💊</div>
+        <h3>Oral Semaglutide</h3>
+        <div class="product-price">$199/mo</div>
+        <div class="product-tags"><span>GLP-1</span><span>Oral</span><span>No Needles</span></div>
+      </div>
+      <div class="product-card bg-sky fade-up">
+        <div class="product-img">💉</div>
+        <h3>Tirzepatide</h3>
+        <div class="product-price">$249/mo</div>
+        <div class="product-tags"><span>GLP-1/GIP</span><span>Injectable</span><span>Premium</span></div>
+      </div>
+      <div class="product-card bg-warm fade-up">
+        <div class="product-img">📦</div>
+        <h3>Complete Bundle</h3>
+        <div class="product-price">$299/mo</div>
+        <div class="product-tags"><span>All-Inclusive</span><span>Coaching</span><span>Lab Work</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     5. RESULTS CAROUSEL
+     ═══════════════════════════════════════════ -->
+<section class="results">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>The results speak for themselves</h2>
+      <p>Real patients, real transformations. See what's possible with medical weight loss.</p>
+    </div>
+  </div>
+  <div class="results-track-wrapper">
+    <div class="results-track" id="resultsTrack">
+      <!-- Cards duplicated for seamless loop -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     6. FEATURED TESTIMONIAL
+     ═══════════════════════════════════════════ -->
+<section class="testimonial-featured">
+  <div class="container fade-up">
+    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+    <!-- CHANGE: Update testimonial quote -->
+    <p class="testimonial-quote">"This program completely changed my life. I've lost 47 pounds and feel like a new person. The doctors were amazing and the process was so easy."</p>
+    <p class="testimonial-subtext">— Sarah M. · 10,000+ Patients Agree</p>
+    <div class="testimonial-product"><img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=800" alt="Happy patient" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     7. WEIGHT CALCULATOR
+     ═══════════════════════════════════════════ -->
+<section class="calculator">
+  <div class="container">
+    <div class="calc-intro fade-up">
+      <h2>Want to reach your goal weight fast?</h2>
+      <p>GLP-1 medications help patients lose an average of 23% of their body weight. Move the slider to see your potential results.</p>
+    </div>
+    <div class="calc-box fade-up">
+      <p class="calc-label">Select your current weight</p>
+      <div class="calc-weight-display"><span id="calcWeight">220</span> lbs</div>
+      <input type="range" class="calc-slider" id="calcSlider" min="140" max="400" value="220">
+      <p class="calc-result-label">Your weight loss potential</p>
+      <div class="calc-result-num"><span id="calcResult">51</span> lbs</div>
+      <p class="calc-result-sub">Based on 23% average body weight reduction with GLP-1 therapy</p>
+      <a href="intake.html" class="cta-btn">Get Started Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     8. THE CHANGE
+     ═══════════════════════════════════════════ -->
+<section class="the-change">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>The change is real</h2>
+    </div>
+    <div class="change-stats fade-up">
+      <div class="change-stat"><div class="num counter" data-target="6" data-suffix="x">0x</div><div class="label">more weight loss</div></div>
+      <div class="change-stat"><div class="num counter" data-target="18" data-suffix="%">0%</div><div class="label">body weight lost</div></div>
+      <div class="change-stat"><div class="num counter" data-target="93" data-suffix="%">0%</div><div class="label">kept it off</div></div>
+    </div>
+    <div class="change-grid fade-up">
+      <div class="cg-item cg-1"><div class="silhouette">👤</div></div>
+      <div class="cg-item cg-2"><div class="silhouette">👤</div></div>
+      <div class="cg-item cg-3"><div class="silhouette">👤</div></div>
+      <div class="cg-item cg-4"><div class="silhouette">👤</div></div>
+      <div class="cg-item cg-5"><div class="silhouette">👤</div></div>
+      <div class="cg-item cg-6"><div class="silhouette">👤</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     9. STATS GRID
+     ═══════════════════════════════════════════ -->
+<section class="stats-grid-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Why patients sign up</h2>
+    </div>
+    <div class="stats-grid fade-up">
+      <div class="stat-box"><div class="stat-num counter" data-target="18" data-suffix="%">0%</div><div class="stat-label">Average weight loss</div></div>
+      <div class="stat-box"><div class="stat-num counter" data-target="9" data-suffix="/10">0/10</div><div class="stat-label">Rate most effective</div></div>
+      <div class="stat-box"><div class="stat-num counter" data-target="6.5" data-suffix="&quot;" data-decimals="1">0"</div><div class="stat-label">Waist reduction</div></div>
+      <div class="stat-box"><div class="stat-num counter" data-target="93" data-suffix="%">0%</div><div class="stat-label">Kept weight off</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     10. 3-STEP JOURNEY
+     ═══════════════════════════════════════════ -->
+<section class="journey">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Begin your weight loss journey</h2>
+      <p>Three simple steps to a healthier you</p>
+    </div>
+    <div class="journey-cards">
+      <!-- CHANGE: Update step descriptions -->
+      <div class="journey-card fade-up">
+        <div class="journey-card-img bg-mint">📋</div>
+        <div class="journey-card-body">
+          <p class="step-num">Step 1</p>
+          <h3>Get Approved</h3>
+          <p>Complete a quick online health assessment. Our medical team reviews your history within 24 hours.</p>
+        </div>
+      </div>
+      <div class="journey-card fade-up">
+        <div class="journey-card-img bg-sand">👨‍⚕️</div>
+        <div class="journey-card-body">
+          <p class="step-num">Step 2</p>
+          <h3>Get Prescribed</h3>
+          <p>A licensed physician creates your personalized treatment plan with the right GLP-1 medication for you.</p>
+        </div>
+      </div>
+      <div class="journey-card fade-up">
+        <div class="journey-card-img bg-sky">📦</div>
+        <div class="journey-card-body">
+          <p class="step-num">Step 3</p>
+          <h3>Receive Your Rx</h3>
+          <p>Your medication ships directly to your door in discreet packaging. Ongoing support included.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     11. SUPPORT SECTION
+     ═══════════════════════════════════════════ -->
+<section class="support">
+  <div class="container">
+    <div class="support-grid fade-up">
+      <div class="support-img"><img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=800" alt="Wellness" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+      <div class="support-text">
+        <!-- CHANGE: Update value proposition -->
+        <h2>We'll fix your broken metabolism</h2>
+        <p>GLP-1 medications work by mimicking natural hormones that regulate appetite and blood sugar. Combined with our physician-guided program, you'll finally break free from the cycle of failed diets and yo-yo weight loss.</p>
+        <p>Our medical team provides ongoing monitoring, dosage adjustments, and nutritional guidance every step of the way.</p>
+        <a href="intake.html" class="cta-btn">Talk to a Doctor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     12. EXTENDED REVIEWS
+     ═══════════════════════════════════════════ -->
+<section class="reviews">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>There's a reason people are raving about us</h2>
+    </div>
+  </div>
+  <div class="reviews-scroll" id="reviewsScroll">
+    <!-- Populated by JS -->
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     13. FAQ ACCORDION
+     ═══════════════════════════════════════════ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq-list fade-up" id="faqList">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     14. GUARANTEE
+     ═══════════════════════════════════════════ -->
+<section class="guarantee">
+  <div class="container fade-up">
+    <div class="guarantee-icon">✓</div>
+    <!-- CHANGE: Update guarantee headline -->
+    <h2>Our promise to you</h2>
+    <div class="guarantee-points">
+      <div class="guarantee-point"><div class="gp-icon">💰</div><div class="gp-label">Money-Back Guarantee</div></div>
+      <div class="guarantee-point"><div class="gp-icon">🚚</div><div class="gp-label">Free Shipping</div></div>
+      <div class="guarantee-point"><div class="gp-icon">👨‍⚕️</div><div class="gp-label">Doctor Prescribed</div></div>
+      <div class="guarantee-point"><div class="gp-icon">🔒</div><div class="gp-label">No Hidden Fees</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     15. DOCTORS
+     ═══════════════════════════════════════════ -->
+<section class="doctors">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Meet our incredible doctors</h2>
+      <p>Board-certified physicians specializing in medical weight loss</p>
+    </div>
+  </div>
+  <div class="doctors-scroll">
+    <!-- CHANGE: Update doctor names and credentials -->
+    <div class="doctor-card fade-up">
+      <div class="doctor-avatar" style="background:var(--bg-mint)">👤</div>
+      <h4>Dr. Sarah Chen</h4>
+      <p class="cred">Board Certified, Internal Medicine</p>
+    </div>
+    <div class="doctor-card fade-up">
+      <div class="doctor-avatar" style="background:var(--bg-sand)">👤</div>
+      <h4>Dr. Michael Ross</h4>
+      <p class="cred">Board Certified, Endocrinology</p>
+    </div>
+    <div class="doctor-card fade-up">
+      <div class="doctor-avatar" style="background:var(--bg-sky)">👤</div>
+      <h4>Dr. Emily Park</h4>
+      <p class="cred">Board Certified, Obesity Medicine</p>
+    </div>
+    <div class="doctor-card fade-up">
+      <div class="doctor-avatar" style="background:var(--bg-warm)">👤</div>
+      <h4>Dr. James Wilson</h4>
+      <p class="cred">Board Certified, Family Medicine</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     16. FOOTER
+     ═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <!-- CHANGE: Update clinic name and description -->
+        <div class="footer-brand" id="footer-brand">[YOUR CLINIC NAME]</div>
+        <p>Personalized, physician-led weight loss programs using FDA-approved GLP-1 medications. Delivered to your door.</p>
+      </div>
+      <div>
+        <h4 style="margin-bottom:16px;">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="intake.html">Get Started</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom:16px;">Contact</h4>
+        <ul class="footer-contact">
+          <!-- CHANGE: Update contact info -->
+          <li>📧 <a href="mailto:[YOUR EMAIL]" id="footer-email">[YOUR EMAIL]</a></li>
+          <li>📞 <a href="tel:[YOUR PHONE]" id="footer-phone">[YOUR PHONE]</a></li>
+          <li>📍 <span id="footer-address">[YOUR ADDRESS]</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 <span class="business-name">[YOUR CLINIC NAME]</span>. All rights reserved.</p>
+      <!-- CHANGE: Update legal links -->
+      <p style="margin-top:8px;"><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a> · <a href="#">HIPAA Notice</a></p>
+      <p class="footer-disclaimer">This website is for informational purposes only and does not constitute medical advice. All medications are prescribed by licensed physicians after a medical evaluation. Individual results may vary. GLP-1 medications are prescription drugs that should only be used under the supervision of a healthcare provider. [LegitScript Certified]</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     17. STICKY MOBILE CTA
+     ═══════════════════════════════════════════ -->
+<div class="mobile-sticky-cta" id="mobileCta">
+  <a href="intake.html" class="cta-btn">Start Your Journey — $179/mo</a>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     18. INTAKE MODAL
+     ═══════════════════════════════════════════ -->
+<div class="modal-overlay" id="intakeModal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <h2>Start Your Journey</h2>
+    <p class="modal-sub">Complete this quick form and a licensed physician will review your information within 24 hours.</p>
+    <form id="intakeForm">
+      <div class="modal-field">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your full name" required>
+      </div>
+      <div class="modal-field">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com" required>
+      </div>
+      <div class="modal-field">
+        <label>Phone</label>
+        <input type="tel" placeholder="(555) 123-4567" required>
+      </div>
+      <div class="modal-field">
+        <label>Current Weight (lbs)</label>
+        <input type="number" placeholder="220" min="100" max="500">
+      </div>
+      <div class="modal-field">
+        <label>Goal Weight (lbs)</label>
+        <input type="number" placeholder="170" min="100" max="500">
+      </div>
+      <div class="modal-field">
+        <label>Preferred Medication</label>
+        <select>
+          <option>Semaglutide (Injectable)</option>
+          <option>Semaglutide (Oral)</option>
+          <option>Tirzepatide</option>
+          <option>Not sure — help me decide</option>
+        </select>
+      </div>
+      <button type="submit" class="cta-btn" style="width:100%;margin-top:8px;">Submit Application</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     THEME SWITCHER
+     ═══════════════════════════════════════════ -->
+<div class="theme-panel" id="themePanel">
+  <div class="theme-panel-title">🎨 Pick a Color Theme (10 options)<br>Tell Kato your favorite!</div>
+  <div id="themeOptions"></div>
+  <button class="theme-panel-close" onclick="document.getElementById('themePanel').classList.remove('open')">Close</button>
+</div>
+<button class="theme-toggle-btn" onclick="document.getElementById('themePanel').classList.toggle('open')">🎨 Themes</button>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════ -->
+<script>
+// ─── CONFIG ─────────────────────────────────
+// CHANGE: Update all config values below
+const CONFIG = {
+  businessName: 'Bimini Spring',
+  tagline: 'Personalized Weight Loss Solutions',
+  phone: '[YOUR PHONE]',
+  email: '[YOUR EMAIL]',
+  address: '[YOUR ADDRESS]',
+  startPrice: '$179',
+  refillPrice: '$299',
+  ctaUrl: '#intake',
+};
+
+// Apply config to page
+// Logo is now an image, skip text replacement for nav-logo
+document.getElementById('footer-brand').textContent = CONFIG.businessName;
+document.getElementById('footer-email').textContent = CONFIG.email;
+document.getElementById('footer-email').href = 'mailto:' + CONFIG.email;
+document.getElementById('footer-phone').textContent = CONFIG.phone;
+document.getElementById('footer-phone').href = 'tel:' + CONFIG.phone;
+document.getElementById('footer-address').textContent = CONFIG.address;
+document.querySelectorAll('.business-name').forEach(el => el.textContent = CONFIG.businessName);
+
+// ─── THEMES ─────────────────────────────────
+const THEMES = [
+  { name: 'Ocean Trust', primary: '#1B2A4A', secondary: '#3B82B6', accent: '#D4A843', accentHover: '#b8902e', primaryDark: '#0f1a30' },
+  { name: 'Fresh Start', primary: '#0D5C63', secondary: '#14919B', accent: '#F27059', accentHover: '#d45a42', primaryDark: '#073a3f' },
+  { name: 'Royal Wellness', primary: '#3B1F6E', secondary: '#7C5CBF', accent: '#5EC4AC', accentHover: '#44a88f', primaryDark: '#261347' },
+  { name: 'Clean Clinic', primary: '#1B4965', secondary: '#62B6CB', accent: '#F4845F', accentHover: '#e06a42', primaryDark: '#0f2d40' },
+  { name: 'Natural Health', primary: '#2D5016', secondary: '#5E8B3E', accent: '#D4913B', accentHover: '#b87a2a', primaryDark: '#1a300c' },
+  { name: 'Warm Terra', primary: '#8B4513', secondary: '#CD853F', accent: '#F5DEB3', accentHover: '#e0c896', primaryDark: '#5a2d0c' },
+  { name: 'Midnight Luxe', primary: '#0D1B2A', secondary: '#00B4D8', accent: '#FFD700', accentHover: '#e0be00', primaryDark: '#060e16' },
+  { name: 'Rose Clinical', primary: '#8B2252', secondary: '#D4909C', accent: '#F8F0E3', accentHover: '#e8dcc8', primaryDark: '#5a1535' },
+  { name: 'Evergreen Med', primary: '#38312c', secondary: '#779d7c', accent: '#C6A673', accentHover: '#ae8f5e', primaryDark: '#1f1b17' },
+  { name: 'Arctic Clean', primary: '#334155', secondary: '#7DD3FC', accent: '#FF6B6B', accentHover: '#e04e4e', primaryDark: '#1e293b' },
+];
+
+const themeOptionsEl = document.getElementById('themeOptions');
+THEMES.forEach((t, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'theme-option' + (i === 3 ? ' active' : '');
+  btn.innerHTML = `<div class="theme-swatches"><span style="background:${t.primary}"></span><span style="background:${t.secondary}"></span><span style="background:${t.accent}"></span></div><span class="theme-option-name">${t.name}</span>`;
+  btn.onclick = () => {
+    document.documentElement.style.setProperty('--primary', t.primary);
+    document.documentElement.style.setProperty('--primary-dark', t.primaryDark);
+    document.documentElement.style.setProperty('--secondary', t.secondary);
+    document.documentElement.style.setProperty('--accent', t.accent);
+    document.documentElement.style.setProperty('--accent-hover', t.accentHover);
+    document.querySelectorAll('.theme-option').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  };
+  themeOptionsEl.appendChild(btn);
+});
+
+// ─── NAVBAR SCROLL ──────────────────────────
+const navbar = document.getElementById('navbar');
+const mobileCta = document.getElementById('mobileCta');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+  mobileCta.classList.toggle('show', window.scrollY > 400);
+});
+
+// ─── WEIGHT CALCULATOR ──────────────────────
+const slider = document.getElementById('calcSlider');
+const weightDisplay = document.getElementById('calcWeight');
+const resultDisplay = document.getElementById('calcResult');
+function updateCalc() {
+  const w = parseInt(slider.value);
+  const loss = Math.round(w * 0.23);
+  weightDisplay.textContent = w;
+  resultDisplay.textContent = loss;
+  const pct = ((w - 140) / (400 - 140)) * 100;
+  slider.style.setProperty('--slider-pct', pct + '%');
+}
+slider.addEventListener('input', updateCalc);
+updateCalc();
+
+// ─── MODAL ──────────────────────────────────
+const modal = document.getElementById('intakeModal');
+document.querySelectorAll('.cta-trigger').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.classList.add('open');
+  });
+});
+document.getElementById('modalClose').addEventListener('click', () => modal.classList.remove('open'));
+modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+document.getElementById('intakeForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  alert('Thank you! A physician will review your application within 24 hours.');
+  modal.classList.remove('open');
+});
+
+// ─── FAQ ────────────────────────────────────
+// CHANGE: Update FAQ questions and answers below
+const FAQ_DATA = [
+  { q: 'How much does the program cost?', a: 'Our program starts at $179 for the first month, which includes your medical consultation, prescription, and medication. Refills are $299/month. No hidden fees.' },
+  { q: 'What medications do you prescribe?', a: 'We prescribe FDA-approved GLP-1 receptor agonists including Semaglutide and Tirzepatide. Your doctor will recommend the best option based on your health profile.' },
+  { q: 'Do you accept insurance?', a: 'Currently, our program is self-pay to keep the process simple and fast. However, our prices are significantly lower than retail pharmacy costs. We can provide documentation for HSA/FSA reimbursement.' },
+  { q: 'How does the process work?', a: 'Simply complete our online health assessment. A licensed physician reviews your information within 24 hours. If approved, your medication ships directly to your door via our partner pharmacy.' },
+  { q: 'What are the potential side effects?', a: 'Common side effects include mild nausea, which typically subsides within the first few weeks. Your doctor will start you on a low dose and gradually increase to minimize side effects.' },
+  { q: 'How quickly will I see results?', a: 'Most patients begin noticing results within the first 4-6 weeks. Clinical studies show an average of 15-23% body weight reduction over the treatment period.' },
+  { q: 'How is the medication shipped?', a: 'Medications are shipped in temperature-controlled packaging via overnight delivery. All shipments are discreet with no indication of contents on the outside.' },
+  { q: 'Can I cancel anytime?', a: 'Absolutely. There are no long-term contracts or cancellation fees. You can pause or cancel your subscription at any time through your patient portal.' },
+];
+const faqList = document.getElementById('faqList');
+FAQ_DATA.forEach(item => {
+  const div = document.createElement('div');
+  div.className = 'faq-item';
+  div.innerHTML = `<button class="faq-question">${item.q}<span class="faq-icon">+</span></button><div class="faq-answer"><p>${item.a}</p></div>`;
+  div.querySelector('.faq-question').addEventListener('click', () => div.classList.toggle('open'));
+  faqList.appendChild(div);
+});
+
+// ─── RESULTS CAROUSEL ───────────────────────
+// CHANGE: Update patient names, results, and stats
+const RESULTS_DATA = [
+  { name: 'Jennifer T.', lost: 'Lost 42 lbs in 4 months', stats: ['Lower blood pressure', 'More energy', 'Better sleep'] },
+  { name: 'Marcus R.', lost: 'Lost 58 lbs in 6 months', stats: ['A1C normalized', 'Off 2 medications', 'Active lifestyle'] },
+  { name: 'Lisa K.', lost: 'Lost 35 lbs in 3 months', stats: ['Reduced joint pain', 'Improved mood', 'Better mobility'] },
+  { name: 'David W.', lost: 'Lost 67 lbs in 8 months', stats: ['Reversed pre-diabetes', 'Lower cholesterol', 'More confidence'] },
+  { name: 'Amanda S.', lost: 'Lost 29 lbs in 3 months', stats: ['Better sleep', 'Reduced inflammation', 'More energy'] },
+  { name: 'Robert H.', lost: 'Lost 51 lbs in 5 months', stats: ['Off blood pressure meds', 'Improved stamina', 'Better labs'] },
+];
+const resultsTrack = document.getElementById('resultsTrack');
+const allResults = [...RESULTS_DATA, ...RESULTS_DATA]; // duplicate for loop
+allResults.forEach(r => {
+  const card = document.createElement('div');
+  card.className = 'result-card';
+  card.innerHTML = `<div class="result-photo">👤</div><h4>${r.name}</h4><p class="lost">${r.lost}</p><ul class="result-stats">${r.stats.map(s => `<li>${s}</li>`).join('')}</ul>`;
+  resultsTrack.appendChild(card);
+});
+
+// ─── REVIEWS ────────────────────────────────
+// CHANGE: Update reviewer names and quotes
+const REVIEWS_DATA = [
+  { name: 'Patricia M.', text: 'I was skeptical at first but the results are undeniable. 38 pounds gone and I feel incredible. The medical team is so supportive.' },
+  { name: 'James L.', text: 'Best decision I ever made. The doctor was thorough and the medication really works. Down 45 lbs.' },
+  { name: 'Sandra K.', text: 'After years of failed diets, this is the first thing that actually worked. The science behind GLP-1 is real.' },
+  { name: 'Michael B.', text: 'Simple process, amazing results. The online consultation was thorough and my medication arrived in 2 days.' },
+  { name: 'Karen W.', text: 'My doctor recommended I try GLP-1 and this clinic made it so affordable and easy. Down 32 lbs in 3 months!' },
+  { name: 'Thomas H.', text: 'The support team checks in regularly and my doctor adjusts my dosage as needed. First class care.' },
+  { name: 'Jessica R.', text: 'I\'ve tried everything — keto, intermittent fasting, you name it. This is the only thing that gave me lasting results.' },
+  { name: 'Chris D.', text: 'Affordable, effective, and the doctors actually care. Already recommended to three friends.' },
+];
+const reviewsScroll = document.getElementById('reviewsScroll');
+const bgColors = ['var(--bg-mint)', 'var(--bg-sand)', 'var(--bg-sky)', 'var(--bg-warm)', '#f0e8f5', 'var(--bg-mint)', 'var(--bg-sand)', 'var(--bg-sky)'];
+REVIEWS_DATA.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = 'review-card';
+  card.innerHTML = `<div class="review-avatar" style="background:${bgColors[i]}">👤</div><div class="stars">★★★★★</div><p class="review-name">${r.name}</p><p class="review-text">${r.text}</p>`;
+  reviewsScroll.appendChild(card);
+});
+
+// ─── SCROLL ANIMATIONS ──────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ─── COUNTER ANIMATION ─────────────────────
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const decimals = parseInt(el.dataset.decimals) || 0;
+      const duration = 1500;
+      const start = performance.now();
+      function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = (target * eased).toFixed(decimals);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+</script>
+</body>
+</html>

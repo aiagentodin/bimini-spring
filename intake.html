@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CHANGE: Update page title -->
+<title>Bimini Spring — Medical Weight Loss Intake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Red+Hat+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+/* CHANGE: Colors */
+:root{
+  --bg:#F7F4F0;
+  --gold:#C6A673;
+  --gold-dark:#ae8f5e;
+  --text:#38312c;
+  --text-light:#6B7280;
+  --white:#fff;
+  --warning:#FEF3C7;
+  --warning-border:#F59E0B;
+  --danger:#FEE2E2;
+  --danger-border:#EF4444;
+  --success:#D1FAE5;
+  --success-border:#10B981;
+  --radius:16px;
+}
+body{
+  font-family:'Lora',serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.6;
+  font-size:15px;
+}
+/* ── Progress Bar ── */
+.progress-bar{
+  position:sticky;top:0;z-index:100;
+  background:var(--white);
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  padding:16px 24px;
+}
+.progress-inner{
+  max-width:600px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;
+}
+.progress-inner::before{
+  content:'';position:absolute;top:50%;left:10%;right:10%;
+  height:2px;background:#e0dcd7;transform:translateY(-50%);z-index:0;
+}
+.progress-fill{
+  position:absolute;top:50%;left:10%;
+  height:2px;background:var(--gold);transform:translateY(-50%);z-index:1;
+  transition:width 0.4s ease;
+}
+.progress-step{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  z-index:2;position:relative;
+}
+.progress-dot{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--white);border:2px solid #e0dcd7;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;color:var(--text-light);
+  transition:all 0.3s ease;
+}
+.progress-step.active .progress-dot,
+.progress-step.done .progress-dot{
+  border-color:var(--gold);background:var(--gold);color:var(--white);
+}
+.progress-label{font-size:11px;color:var(--text-light);font-family:'Red Hat Text',sans-serif;}
+.progress-step.active .progress-label{color:var(--gold);font-weight:600;}
+
+/* ── Logo ── */
+/* CHANGE: Logo text */
+.intake-logo{
+  text-align:center;padding:20px 5%;
+  background:var(--cream);
+  border-bottom:1px solid #e8e4df;
+}
+.intake-logo img{
+  width:50%;max-width:600px;height:auto;
+  background:transparent;
+}
+
+/* ── Form Container ── */
+.form-container{
+  max-width:640px;margin:0 auto;padding:24px 20px 120px;
+  position:relative;overflow:hidden;
+}
+.step{
+  display:none;
+  animation:slideIn 0.35s ease forwards;
+}
+.step.active{display:block}
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(30px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+/* ── Cards ── */
+.card{
+  background:var(--white);border-radius:var(--radius);
+  padding:32px 28px;margin-bottom:20px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+}
+.card h2{font-size:24px;margin-bottom:8px;font-weight:600}
+.card h3{font-size:18px;margin-bottom:6px;font-weight:600}
+.card p{color:var(--text-light);margin-bottom:16px;font-size:14px;font-family:'Red Hat Text',sans-serif}
+.card .subtitle{font-size:13px;color:var(--text-light)}
+
+/* ── Inputs ── */
+label.field-label{
+  display:block;font-weight:600;margin-bottom:6px;font-size:14px;
+}
+input[type=text],input[type=email],input[type=tel],input[type=number],
+select,textarea{
+  width:100%;padding:14px 16px;border:1.5px solid #ddd;border-radius:12px;
+  font-family:'Red Hat Text',sans-serif;font-size:15px;background:var(--white);
+  outline:none;transition:border-color 0.2s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+textarea{resize:vertical;min-height:80px}
+.field-row{display:flex;gap:12px}
+.field-row>*{flex:1}
+.field-group{margin-bottom:20px}
+
+/* ── Bubble Buttons ── */
+.bubble-group{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.bubble{
+  padding:14px 22px;border:2px solid #e0dcd7;border-radius:50px;
+  background:var(--white);cursor:pointer;font-family:'Red Hat Text',sans-serif;
+  font-size:14px;font-weight:500;transition:all 0.2s;
+  display:flex;align-items:center;gap:8px;user-select:none;
+}
+.bubble:hover{border-color:var(--gold);background:#faf7f2}
+.bubble.selected{border-color:var(--gold);background:var(--gold);color:var(--white)}
+.bubble .icon{font-size:18px}
+.bubble-lg{
+  flex:1;min-width:140px;justify-content:center;
+  padding:20px;flex-direction:column;text-align:center;
+  border-radius:var(--radius);
+}
+
+/* ── Checkbox List ── */
+.check-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.check-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;border:1.5px solid #e8e4df;border-radius:12px;
+  cursor:pointer;transition:all 0.2s;font-family:'Red Hat Text',sans-serif;font-size:14px;
+  user-select:none;
+}
+.check-item:hover{border-color:var(--gold);background:#faf7f2}
+.check-item.checked{border-color:var(--gold);background:#faf7f2}
+.check-box{
+  width:22px;height:22px;border:2px solid #ccc;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all 0.2s;font-size:13px;color:transparent;
+}
+.check-item.checked .check-box{
+  border-color:var(--gold);background:var(--gold);color:var(--white);
+}
+
+/* ── Yes/No ── */
+.yn-group{display:flex;gap:12px;margin-bottom:12px}
+.yn-btn{
+  flex:1;padding:14px;border:2px solid #e0dcd7;border-radius:12px;
+  background:var(--white);text-align:center;cursor:pointer;
+  font-family:'Red Hat Text',sans-serif;font-size:15px;font-weight:500;
+  transition:all 0.2s;
+}
+.yn-btn:hover{border-color:var(--gold)}
+.yn-btn.selected{border-color:var(--gold);background:var(--gold);color:var(--white)}
+
+/* ── Alerts ── */
+.alert{
+  padding:14px 18px;border-radius:12px;margin-bottom:16px;
+  font-size:13px;font-family:'Red Hat Text',sans-serif;
+  display:none;
+}
+.alert.show{display:block;animation:slideIn 0.3s ease}
+.alert-warning{background:var(--warning);border:1px solid var(--warning-border);color:#92400E}
+.alert-danger{background:var(--danger);border:1px solid var(--danger-border);color:#991B1B}
+.alert-success{background:var(--success);border:1px solid var(--success-border);color:#065F46}
+.alert-info{background:#EFF6FF;border:1px solid #3B82F6;color:#1E40AF}
+
+/* ── BMI Display ── */
+.bmi-display{
+  background:linear-gradient(135deg,#faf7f2,#f0ebe3);
+  border-radius:12px;padding:16px 20px;text-align:center;
+  margin-top:12px;
+}
+.bmi-display .bmi-num{font-size:32px;font-weight:700;color:var(--gold)}
+.bmi-display .bmi-label{font-size:12px;color:var(--text-light);font-family:'Red Hat Text',sans-serif}
+
+/* ── Buttons ── */
+.btn-row{
+  display:flex;gap:12px;margin-top:24px;
+}
+.btn{
+  padding:16px 32px;border-radius:50px;border:none;
+  font-family:'Lora',serif;font-size:15px;font-weight:600;
+  cursor:pointer;transition:all 0.3s;flex:1;text-align:center;
+}
+.btn-primary{
+  background:var(--gold);color:var(--white);
+  box-shadow:0 4px 16px rgba(198,166,115,0.3);
+}
+.btn-primary:hover{background:var(--gold-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(198,166,115,0.4)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-back{
+  background:transparent;color:var(--text-light);border:1.5px solid #ddd;
+  flex:0 0 auto;padding:16px 24px;
+}
+.btn-back:hover{border-color:var(--gold);color:var(--text)}
+
+/* ── Hero Image ── */
+.hero-img{
+  width:100%;height:240px;border-radius:var(--radius);overflow:hidden;
+  margin-bottom:20px;
+}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+
+/* ── Pace Cards ── */
+.pace-stat{
+  display:flex;gap:16px;margin-bottom:16px;
+}
+.pace-box{
+  flex:1;background:linear-gradient(135deg,#faf7f2,#f0ebe3);
+  border-radius:12px;padding:16px;text-align:center;
+}
+.pace-box .num{font-size:28px;font-weight:700;color:var(--gold)}
+.pace-box .lbl{font-size:11px;color:var(--text-light);font-family:'Red Hat Text',sans-serif}
+
+/* ── Review Summary ── */
+.summary-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;
+}
+.summary-item{
+  background:#faf7f2;border-radius:12px;padding:14px;text-align:center;
+}
+.summary-item .val{font-size:22px;font-weight:700;color:var(--gold)}
+.summary-item .lbl{font-size:11px;color:var(--text-light);font-family:'Red Hat Text',sans-serif}
+
+/* ── Candidate Banner ── */
+.candidate-banner{
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  color:var(--white);border-radius:var(--radius);padding:24px;text-align:center;
+  margin-bottom:20px;
+}
+.candidate-banner .pct{font-size:42px;font-weight:700}
+.candidate-banner p{margin:0;font-size:14px;opacity:0.9;font-family:'Red Hat Text',sans-serif}
+
+/* ── Trust Badges ── */
+.trust-badges{
+  display:flex;justify-content:center;gap:24px;margin-top:20px;
+  flex-wrap:wrap;
+}
+.trust-badge{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:11px;color:var(--text-light);font-family:'Red Hat Text',sans-serif;
+}
+.trust-badge .badge-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:#f0ebe3;display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+}
+
+/* ── Thank You ── */
+.thank-you{
+  text-align:center;padding:60px 20px;
+}
+.thank-you .check-circle{
+  width:80px;height:80px;border-radius:50%;
+  background:var(--gold);color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;margin:0 auto 24px;
+}
+.thank-you h2{margin-bottom:12px}
+.thank-you p{color:var(--text-light);font-family:'Red Hat Text',sans-serif}
+
+/* ── Conditional Fields ── */
+.conditional{
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height 0.4s ease,opacity 0.3s ease,margin 0.3s ease;
+}
+.conditional.show{
+  max-height:500px;opacity:1;margin-top:12px;
+}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .card{padding:24px 18px}
+  .field-row{flex-direction:column;gap:8px}
+  .bubble-group{gap:8px}
+  .bubble-lg{min-width:100px}
+  .pace-stat{flex-direction:column}
+  .summary-grid{grid-template-columns:1fr}
+  h2{font-size:20px}
+}
+
+/* ── Consent ── */
+.consent-row{
+  display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;
+  font-size:13px;font-family:'Red Hat Text',sans-serif;color:var(--text-light);
+  cursor:pointer;
+}
+.consent-row input[type=checkbox]{
+  width:20px;height:20px;flex-shrink:0;margin-top:2px;accent-color:var(--gold);
+}
+
+/* ── Sub-screen slide ── */
+.sub-screen{display:none}
+.sub-screen.active{display:block;animation:slideIn 0.35s ease}
+
+/* photo in review */
+.review-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block}
+</style>
+</head>
+<body>
+
+<!-- CHANGE: Logo / Brand Name -->
+<!-- CHANGE: Add logo here -->
+
+<!-- Progress Bar -->
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    <!-- CHANGE: Progress labels -->
+    <div class="progress-step active" data-step="0"><div class="progress-dot">1</div><span class="progress-label">Start</span></div>
+    <div class="progress-step" data-step="3"><div class="progress-dot">2</div><span class="progress-label">Details</span></div>
+    <div class="progress-step" data-step="7"><div class="progress-dot">3</div><span class="progress-label">Health</span></div>
+    <div class="progress-step" data-step="10"><div class="progress-dot">4</div><span class="progress-label">Eligibility</span></div>
+  </div>
+</div>
+
+<div class="form-container">
+
+<!-- ══════════════════════════════════════════
+     STEP 1: Welcome
+     ══════════════════════════════════════════ -->
+<div class="step active" data-step="0">
+  <div class="hero-img">
+    <!-- CHANGE: Hero image -->
+    <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600" alt="Happy person">
+  </div>
+  <div class="card">
+    <!-- CHANGE: Welcome text -->
+    <h2>Reach your goal weight fast</h2>
+    <p>Without restrictive diets and exercise.</p>
+    <p style="color:var(--text);font-weight:500">Please answer the following questions so we can qualify you for medical weight loss.</p>
+    <div style="margin-top:8px">
+      <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600" alt="Smiling woman" style="width:100%;border-radius:12px;margin-top:12px;height:160px;object-fit:cover">
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="nextStep()">Let's Get Started →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 2: Body Metrics
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="1">
+  <div class="card">
+    <h2>Body Metrics</h2>
+    <p>We need your height and weight to calculate your BMI.</p>
+
+    <label class="field-label">Height</label>
+    <div class="field-row" style="margin-bottom:16px">
+      <select id="heightFeet">
+        <option value="">Feet</option>
+        <option value="4">4 ft</option><option value="5" selected>5 ft</option>
+        <option value="6">6 ft</option><option value="7">7 ft</option>
+      </select>
+      <select id="heightInches">
+        <option value="">Inches</option>
+        <option value="0">0 in</option><option value="1">1 in</option>
+        <option value="2">2 in</option><option value="3">3 in</option>
+        <option value="4">4 in</option><option value="5">5 in</option>
+        <option value="6">6 in</option><option value="7">7 in</option>
+        <option value="8">8 in</option><option value="9">9 in</option>
+        <option value="10">10 in</option><option value="11">11 in</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Current Weight (lbs)</label>
+      <input type="number" id="currentWeight" placeholder="e.g. 220" min="100" max="1300">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Goal Weight (lbs)</label>
+      <input type="number" id="goalWeight" placeholder="e.g. 170" min="80" max="500">
+    </div>
+
+    <div class="bmi-display" id="bmiDisplay" style="display:none">
+      <div class="bmi-label">YOUR BMI</div>
+      <div class="bmi-num" id="bmiValue">--</div>
+      <div class="bmi-label" id="bmiCategory"></div>
+    </div>
+  </div>
+  <div id="step1Alert" class="alert alert-warning">Weight must be between 100 and 1300 lbs.</div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="validateStep1()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 3: Demographics
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="2">
+  <div class="card">
+    <h2>About You</h2>
+    <p>Select your biological sex and date of birth.</p>
+
+    <label class="field-label">Biological Sex</label>
+    <div class="bubble-group" id="sexGroup">
+      <div class="bubble bubble-lg" data-value="Male" onclick="selectBubble(this,'sexGroup')">
+        <span class="icon">♂️</span> Male
+      </div>
+      <div class="bubble bubble-lg" data-value="Female" onclick="selectBubble(this,'sexGroup')">
+        <span class="icon">♀️</span> Female
+      </div>
+    </div>
+
+    <label class="field-label">Date of Birth</label>
+    <div class="field-row" style="margin-bottom:16px">
+      <select id="dobMonth">
+        <option value="">Month</option>
+        <option>January</option><option>February</option><option>March</option>
+        <option>April</option><option>May</option><option>June</option>
+        <option>July</option><option>August</option><option>September</option>
+        <option>October</option><option>November</option><option>December</option>
+      </select>
+      <select id="dobDay"><option value="">Day</option></select>
+      <select id="dobYear"><option value="">Year</option></select>
+    </div>
+
+    <!-- Female-specific -->
+    <div class="conditional" id="femaleQuestions">
+      <div class="alert alert-warning show" style="display:block">⚠️ GLP-1 medications are not safe during pregnancy or breastfeeding.</div>
+      <div class="check-list">
+        <label class="check-item" onclick="toggleCheck(this)">
+          <span class="check-box">✓</span> I am currently pregnant
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <span class="check-box">✓</span> I am currently breastfeeding
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <span class="check-box">✓</span> Neither applies to me
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="validateStep2()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 4: Health Screening 1 (Disqualifiers)
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="3">
+  <div class="card">
+    <h2>Health Screening</h2>
+    <p>Do you currently have any of the following conditions? Select all that apply.</p>
+
+    <div class="check-list" id="disqualifiers">
+      <label class="check-item" onclick="toggleCheckGroup(this,'disqualifiers')" data-value="End-stage kidney disease"><span class="check-box">✓</span> End-stage kidney disease</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'disqualifiers')" data-value="End-stage liver disease"><span class="check-box">✓</span> End-stage liver disease</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'disqualifiers')" data-value="Current suicidal thoughts"><span class="check-box">✓</span> Current suicidal thoughts</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'disqualifiers')" data-value="Active cancer"><span class="check-box">✓</span> Active cancer treatment</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'disqualifiers')" data-value="Severe GI condition"><span class="check-box">✓</span> Severe gastrointestinal condition</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'disqualifiers')" data-value="Substance use disorder"><span class="check-box">✓</span> Current substance use disorder</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'disqualifiers')" data-value="None" data-none="true"><span class="check-box">✓</span> ✅ None of the above</label>
+    </div>
+
+    <div class="alert alert-danger" id="disqualifyAlert">⚠️ For your safety, this answer may disqualify you from a prescription. Our medical team will review your case individually.</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="validateStep3()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 5: Health Screening 2 (Conditions)
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="4">
+  <div class="card">
+    <h2>Medical Conditions</h2>
+    <p>Do you have or have you ever been diagnosed with any of the following? Select all that apply.</p>
+
+    <div class="check-list" id="conditions">
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Gallbladder disease"><span class="check-box">✓</span> Gallbladder disease</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Hypertension"><span class="check-box">✓</span> Hypertension</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Seizures"><span class="check-box">✓</span> Seizures</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Glaucoma"><span class="check-box">✓</span> Glaucoma</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Sleep apnea"><span class="check-box">✓</span> Sleep apnea</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Type 2 diabetes (not on insulin)"><span class="check-box">✓</span> Type 2 diabetes (not on insulin)</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Type 2 diabetes (on insulin)"><span class="check-box">✓</span> Type 2 diabetes (on insulin)</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Type 1 diabetes"><span class="check-box">✓</span> Type 1 diabetes</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Diabetic retinopathy"><span class="check-box">✓</span> Diabetic retinopathy</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Warfarin use"><span class="check-box">✓</span> Currently taking Warfarin</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Pancreatitis history"><span class="check-box">✓</span> History of pancreatitis</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Thyroid cancer family history"><span class="check-box">✓</span> Family history of thyroid cancer</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Gout"><span class="check-box">✓</span> Gout</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="High cholesterol"><span class="check-box">✓</span> High cholesterol</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Depression"><span class="check-box">✓</span> Depression</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Head injury"><span class="check-box">✓</span> Head injury</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Brain tumor/infection"><span class="check-box">✓</span> Brain tumor or infection</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Low sodium"><span class="check-box">✓</span> Low sodium</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Liver disease"><span class="check-box">✓</span> Liver disease</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Kidney disease"><span class="check-box">✓</span> Kidney disease</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Elevated heart rate"><span class="check-box">✓</span> Elevated heart rate</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Coronary artery disease/stroke"><span class="check-box">✓</span> Coronary artery disease or stroke</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Medication allergy" data-allergy="true"><span class="check-box">✓</span> Allergic to any medication</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Congestive heart failure"><span class="check-box">✓</span> Congestive heart failure</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="QT prolongation"><span class="check-box">✓</span> QT prolongation</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Hospitalization last year"><span class="check-box">✓</span> Hospitalization in the last year</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="HIV"><span class="check-box">✓</span> HIV</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Acid reflux"><span class="check-box">✓</span> Acid reflux / GERD</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Asthma"><span class="check-box">✓</span> Asthma</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Urinary incontinence"><span class="check-box">✓</span> Urinary incontinence</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="PCOS"><span class="check-box">✓</span> PCOS</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Low testosterone"><span class="check-box">✓</span> Low testosterone</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Osteoarthritis"><span class="check-box">✓</span> Osteoarthritis</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="Constipation"><span class="check-box">✓</span> Constipation</label>
+      <label class="check-item" onclick="toggleCheckGroup(this,'conditions')" data-value="None" data-none="true"><span class="check-box">✓</span> ✅ None of the above</label>
+    </div>
+
+    <div class="conditional" id="allergyDetail">
+      <div class="field-group">
+        <label class="field-label">Please list your medication allergies:</label>
+        <textarea id="allergyText" placeholder="List medications you are allergic to..."></textarea>
+      </div>
+    </div>
+
+    <div class="alert alert-warning" id="conditionsAlert">⚠️ Some selections may require additional review by our medical team.</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="validateStep4()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 6: Additional Medical
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="5">
+  <div class="card">
+    <h2>Additional Medical History</h2>
+
+    <div class="field-group">
+      <label class="field-label">Have you taken opiate pain medications in the last 3 months?</label>
+      <div class="yn-group" id="opiateGroup">
+        <div class="yn-btn" onclick="selectYN(this,'opiateGroup')">Yes</div>
+        <div class="yn-btn" onclick="selectYN(this,'opiateGroup')">No</div>
+      </div>
+      <div class="conditional" id="opiateDetail">
+        <label class="field-label">Please provide details:</label>
+        <textarea id="opiateText" placeholder="Medication name, dose, reason..."></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Have you had any prior weight loss surgeries?</label>
+      <div class="yn-group" id="surgeryGroup">
+        <div class="yn-btn" onclick="selectYN(this,'surgeryGroup')">Yes</div>
+        <div class="yn-btn" onclick="selectYN(this,'surgeryGroup')">No</div>
+      </div>
+      <div class="conditional" id="surgeryDetail">
+        <label class="field-label">Please provide details:</label>
+        <textarea id="surgeryText" placeholder="Type of surgery, date..."></textarea>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Do you currently take any prescription medications?</label>
+      <div class="yn-group" id="rxGroup">
+        <div class="yn-btn" onclick="selectYN(this,'rxGroup')">Yes</div>
+        <div class="yn-btn" onclick="selectYN(this,'rxGroup')">No</div>
+      </div>
+      <div class="conditional" id="rxDetail">
+        <label class="field-label">Please list all current medications:</label>
+        <textarea id="rxText" placeholder="Medication name, dose, frequency..."></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="validateStep5()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 7: Vitals
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="6">
+  <div class="card">
+    <h2>Vitals</h2>
+    <p>Select the range that best describes your most recent readings.</p>
+
+    <label class="field-label">Blood Pressure</label>
+    <div class="check-list" id="bpGroup">
+      <label class="check-item" onclick="selectRadio(this,'bpGroup')" data-value="Normal"><span class="check-box">✓</span> &lt;120/80 — Normal</label>
+      <label class="check-item" onclick="selectRadio(this,'bpGroup')" data-value="Elevated"><span class="check-box">✓</span> 120-129/&lt;80 — Elevated</label>
+      <label class="check-item" onclick="selectRadio(this,'bpGroup')" data-value="High Stage 1"><span class="check-box">✓</span> 130-139/80-89 — High Stage 1</label>
+      <label class="check-item" onclick="selectRadio(this,'bpGroup')" data-value="High Stage 2"><span class="check-box">✓</span> ≥140/90 — High Stage 2</label>
+    </div>
+
+    <div class="alert alert-danger" id="bpAlert">⚠️ High Stage 2 blood pressure requires careful medical evaluation. Our team will review your case.</div>
+
+    <label class="field-label" style="margin-top:16px">Resting Heart Rate</label>
+    <div class="check-list" id="hrGroup">
+      <label class="check-item" onclick="selectRadio(this,'hrGroup')" data-value="Slow"><span class="check-box">✓</span> &lt;60 bpm — Slow</label>
+      <label class="check-item" onclick="selectRadio(this,'hrGroup')" data-value="Normal"><span class="check-box">✓</span> 60-100 bpm — Normal</label>
+      <label class="check-item" onclick="selectRadio(this,'hrGroup')" data-value="Slightly Fast"><span class="check-box">✓</span> 101-110 bpm — Slightly Fast</label>
+      <label class="check-item" onclick="selectRadio(this,'hrGroup')" data-value="Fast"><span class="check-box">✓</span> &gt;110 bpm — Fast</label>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="validateStep6()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 8: Prior Weight Loss
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="7">
+  <div class="card">
+    <h2>Prior Weight Loss Experience</h2>
+
+    <div class="field-group">
+      <label class="field-label">Have you previously used weight loss medication?</label>
+      <div class="yn-group" id="priorMedGroup">
+        <div class="yn-btn" onclick="selectYN(this,'priorMedGroup')">Yes</div>
+        <div class="yn-btn" onclick="selectYN(this,'priorMedGroup')">No</div>
+      </div>
+      <div class="conditional" id="priorMedDetail">
+        <div class="field-group">
+          <label class="field-label">Medication name, dose, and frequency:</label>
+          <textarea id="priorMedText" placeholder="e.g. Ozempic 0.5mg weekly for 3 months"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Starting weight when you began:</label>
+          <input type="number" id="priorMedWeight" placeholder="lbs">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Do you agree to only obtain GLP-1 medication through this program?</label>
+          <div class="yn-group" id="exclusiveGroup">
+            <div class="yn-btn" onclick="selectYN(this,'exclusiveGroup')">Yes</div>
+            <div class="yn-btn" onclick="selectYN(this,'exclusiveGroup')">No</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Have you tried a weight management program? (Jenny Craig, Weight Watchers, etc.)</label>
+      <div class="yn-group" id="programGroup">
+        <div class="yn-btn" onclick="selectYN(this,'programGroup')">Yes</div>
+        <div class="yn-btn" onclick="selectYN(this,'programGroup')">No</div>
+      </div>
+      <div class="conditional" id="programDetail">
+        <label class="field-label">Brief details:</label>
+        <textarea id="programText" placeholder="Which program and for how long?"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="nextStep()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 9: Weight Loss Pace
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="8">
+  <!-- Sub-screen A: Pace display -->
+  <div class="sub-screen active" id="paceA">
+    <div class="card">
+      <h2>Your Weight Loss Projection</h2>
+      <!-- CHANGE: Projection image -->
+      <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600" alt="Confident" style="width:100%;border-radius:12px;height:140px;object-fit:cover;margin-bottom:16px">
+
+      <div class="pace-stat">
+        <div class="pace-box">
+          <div class="num" id="paceMin">--</div>
+          <div class="lbl">to</div>
+        </div>
+        <div class="pace-box">
+          <div class="num" id="paceMax">--</div>
+          <div class="lbl">lbs/week</div>
+        </div>
+      </div>
+
+      <p style="text-align:center;font-weight:600;color:var(--text)">Estimated <span id="paceWeeks">--</span> weeks to reach your goal</p>
+
+      <p style="text-align:center;margin-top:16px;font-weight:500">How does that pace sound?</p>
+      <div class="bubble-group" style="justify-content:center;margin-top:12px" id="paceGroup">
+        <div class="bubble bubble-lg" data-value="works" onclick="selectPace(this)">
+          <span class="icon">✅</span> That works for me
+        </div>
+        <div class="bubble bubble-lg" data-value="faster" onclick="selectPace(this)">
+          <span class="icon">🏃</span> I want it faster
+        </div>
+        <div class="bubble bubble-lg" data-value="slower" onclick="selectPace(this)">
+          <span class="icon">⏳</span> That's too fast
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    </div>
+  </div>
+
+  <!-- Sub-screen B: Pace response -->
+  <div class="sub-screen" id="paceB">
+    <div class="card" id="paceResponse">
+      <!-- Filled by JS -->
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="showSubScreen('paceA','paceB')">← Back</button>
+      <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 10: Your Information / Review
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="9">
+  <div class="card">
+    <h2>Your Medical Review</h2>
+
+    <div class="summary-grid" id="summaryGrid">
+      <div class="summary-item"><div class="val" id="sumBMI">--</div><div class="lbl">BMI</div></div>
+      <div class="summary-item"><div class="val" id="sumWeight">--</div><div class="lbl">Current Weight</div></div>
+      <div class="summary-item"><div class="val" id="sumGoal">--</div><div class="lbl">Goal Weight</div></div>
+      <div class="summary-item"><div class="val" id="sumWeeks">--</div><div class="lbl">Est. Weeks</div></div>
+    </div>
+
+    <!-- CHANGE: Candidate percentage -->
+    <div class="candidate-banner">
+      <div class="pct">94%</div>
+      <p>You are a strong candidate for medical weight loss with a 94% chance of successful treatment</p>
+    </div>
+
+    <div class="field-row" style="margin-bottom:16px">
+      <div class="field-group">
+        <label class="field-label">First Name</label>
+        <input type="text" id="firstName" placeholder="First name">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Last Name</label>
+        <input type="text" id="lastName" placeholder="Last name">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">State</label>
+      <select id="stateSelect">
+        <option value="">Select your state</option>
+      </select>
+    </div>
+
+    <p style="font-size:12px;color:var(--text-light);text-align:center;margin-top:12px">🔒 Your information is never shared and is protected by HIPAA</p>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="validateStep9()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 11: Contact & Submit
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="10">
+  <div class="card">
+    <h2 id="contactHeader">How can you be reached?</h2>
+    <p>Our medical teams and pharmacy use email and text for patient communication.</p>
+
+    <div class="field-group">
+      <label class="field-label">Email Address</label>
+      <input type="email" id="emailInput" placeholder="your@email.com">
+      <div class="alert alert-warning" id="emailAlert" style="margin-top:8px">Did you mean .com instead of .con?</div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Phone Number</label>
+      <input type="tel" id="phoneInput" placeholder="(555) 123-4567" maxlength="14">
+    </div>
+
+    <label class="consent-row">
+      <input type="checkbox" id="hipaaConsent">
+      I consent to the collection and use of my health information in accordance with HIPAA regulations and the Bimini Spring privacy policy.
+    </label>
+
+    <label class="consent-row">
+      <input type="checkbox" id="smsConsent">
+      I consent to receive SMS text messages regarding my treatment, appointments, and pharmacy updates. Message & data rates may apply.
+    </label>
+  </div>
+
+  <!-- CHANGE: Submit button text -->
+  <div class="btn-row">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-primary" onclick="submitForm()" id="submitBtn">Check Eligibility ✓</button>
+  </div>
+
+  <!-- Trust area -->
+  <div style="margin-top:24px">
+    <div class="trust-badges">
+      <div class="trust-badge"><div class="badge-icon">🏥</div>HIPAA Compliant</div>
+      <div class="trust-badge"><div class="badge-icon">⭐</div>Trustpilot 4.8</div>
+      <div class="trust-badge"><div class="badge-icon">🇺🇸</div>Made in USA</div>
+      <div class="trust-badge"><div class="badge-icon">🔒</div>256-bit SSL</div>
+    </div>
+    <!-- CHANGE: Trust image -->
+    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600" alt="Professional" style="width:100%;border-radius:12px;margin-top:20px;height:160px;object-fit:cover">
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     THANK YOU Screen
+     ══════════════════════════════════════════ -->
+<div class="step" data-step="11">
+  <div class="thank-you">
+    <div class="check-circle">✓</div>
+    <!-- CHANGE: Thank you text -->
+    <h2>Thank You!</h2>
+    <p id="thankYouName">Your application has been submitted.</p>
+    <p style="margin-top:16px">A licensed physician will review your information within 24 hours. You'll receive an email and text message with next steps.</p>
+    <div style="margin-top:32px">
+      <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600" alt="Success" style="width:200px;border-radius:50%;height:200px;object-fit:cover;margin:0 auto">
+    </div>
+    <a href="index.html" class="btn btn-primary" style="display:inline-block;margin-top:32px;text-decoration:none">Return to Home</a>
+  </div>
+</div>
+
+</div><!-- /form-container -->
+
+<script>
+// ─── State ───
+let currentStep = 0;
+const totalSteps = 12; // 0-11
+const formData = {};
+
+// ─── Populate Dropdowns ───
+const daySel = document.getElementById('dobDay');
+for(let i=1;i<=31;i++) daySel.innerHTML += `<option value="${i}">${i}</option>`;
+const yearSel = document.getElementById('dobYear');
+for(let y=2008;y>=1920;y--) yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+
+// US States
+const states = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+const stateSel = document.getElementById('stateSelect');
+states.forEach(s => stateSel.innerHTML += `<option value="${s}">${s}</option>`);
+
+// ─── Navigation ───
+function showStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  const target = document.querySelector(`.step[data-step="${n}"]`);
+  if(target) target.classList.add('active');
+  currentStep = n;
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextStep(){ showStep(currentStep+1); }
+function prevStep(){ if(currentStep>0) showStep(currentStep-1); }
+
+function updateProgress(){
+  const pct = Math.min((currentStep / (totalSteps-1))*100, 100);
+  document.getElementById('progressFill').style.width = pct*0.8 + '%';
+  document.querySelectorAll('.progress-step').forEach(s=>{
+    const stepNum = parseInt(s.dataset.step);
+    s.classList.toggle('active', stepNum <= currentStep);
+    s.classList.toggle('done', stepNum < currentStep);
+  });
+}
+
+// ─── BMI Calculation ───
+function calcBMI(){
+  const ft = parseInt(document.getElementById('heightFeet').value)||0;
+  const inch = parseInt(document.getElementById('heightInches').value)||0;
+  const wt = parseFloat(document.getElementById('currentWeight').value)||0;
+  if(!ft||!wt) { document.getElementById('bmiDisplay').style.display='none'; return null; }
+  const totalInches = ft*12+inch;
+  const bmi = (wt/(totalInches*totalInches))*703;
+  const rounded = Math.round(bmi*10)/10;
+  document.getElementById('bmiValue').textContent = rounded;
+  let cat = 'Normal';
+  if(bmi<18.5) cat='Underweight';
+  else if(bmi<25) cat='Normal';
+  else if(bmi<30) cat='Overweight';
+  else cat='Obese';
+  document.getElementById('bmiCategory').textContent = cat;
+  document.getElementById('bmiDisplay').style.display = 'block';
+  return rounded;
+}
+['heightFeet','heightInches','currentWeight'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',calcBMI);
+});
+
+// ─── Bubble Selection ───
+function selectBubble(el, groupId){
+  document.querySelectorAll(`#${groupId} .bubble`).forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  // Show female questions
+  if(groupId==='sexGroup'){
+    const val = el.dataset.value;
+    document.getElementById('femaleQuestions').classList.toggle('show', val==='Female');
+  }
+}
+
+// ─── Checkbox Toggle ───
+function toggleCheck(el){ el.classList.toggle('checked'); }
+
+function toggleCheckGroup(el, groupId){
+  const isNone = el.dataset.none === 'true';
+  const group = document.getElementById(groupId);
+  if(isNone){
+    group.querySelectorAll('.check-item').forEach(c=>c.classList.remove('checked'));
+    el.classList.add('checked');
+  } else {
+    group.querySelector('[data-none="true"]')?.classList.remove('checked');
+    el.classList.toggle('checked');
+  }
+  // Disqualifier alert
+  if(groupId==='disqualifiers'){
+    const hasChecked = [...group.querySelectorAll('.check-item.checked')].some(c=>c.dataset.none!=='true');
+    document.getElementById('disqualifyAlert').classList.toggle('show',hasChecked);
+  }
+  // Conditions allergy
+  if(groupId==='conditions'){
+    const allergyChecked = group.querySelector('[data-allergy="true"]')?.classList.contains('checked');
+    document.getElementById('allergyDetail').classList.toggle('show',allergyChecked);
+    const hasChecked = [...group.querySelectorAll('.check-item.checked')].some(c=>c.dataset.none!=='true');
+    document.getElementById('conditionsAlert').classList.toggle('show',hasChecked);
+  }
+}
+
+// ─── Radio Selection ───
+function selectRadio(el, groupId){
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.check-item').forEach(c=>c.classList.remove('checked'));
+  el.classList.add('checked');
+  if(groupId==='bpGroup'){
+    document.getElementById('bpAlert').classList.toggle('show', el.dataset.value==='High Stage 2');
+  }
+}
+
+// ─── Yes/No ───
+function selectYN(el, groupId){
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  const isYes = el.textContent.trim()==='Yes';
+  // Show detail fields
+  const detailMap = {
+    opiateGroup:'opiateDetail', surgeryGroup:'surgeryDetail', rxGroup:'rxDetail',
+    priorMedGroup:'priorMedDetail', programGroup:'programDetail'
+  };
+  if(detailMap[groupId]){
+    document.getElementById(detailMap[groupId]).classList.toggle('show',isYes);
+  }
+}
+
+// ─── Sub-screens ───
+function showSubScreen(showId, hideId){
+  document.getElementById(hideId).classList.remove('active');
+  document.getElementById(showId).classList.add('active');
+}
+
+// ─── Pace Selection ───
+function selectPace(el){
+  document.querySelectorAll('#paceGroup .bubble').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  const val = el.dataset.value;
+  const resp = document.getElementById('paceResponse');
+  const responses = {
+    works: `<h3>Great choice! 👍</h3><p>Your projected pace is healthy and sustainable. Most patients find this rate comfortable while still seeing meaningful results week after week.</p><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600" alt="Happy" style="width:100%;border-radius:12px;margin-top:12px;height:140px;object-fit:cover">`,
+    faster: `<h3>We hear you! 🏃</h3><p>While safety comes first, our physicians can discuss medication options and complementary strategies that may accelerate your results. Higher doses of GLP-1 medications often lead to faster weight loss once your body adjusts.</p>`,
+    slower: `<h3>No problem! ⏳</h3><p>We can start at a lower dose and gradually increase. Many patients prefer a slower, steadier approach. Your physician will customize the dosing schedule to match your comfort level.</p>`
+  };
+  resp.innerHTML = responses[val] || '';
+  showSubScreen('paceB','paceA');
+}
+
+// ─── Validation ───
+function validateStep1(){
+  const wt = parseFloat(document.getElementById('currentWeight').value);
+  const gw = parseFloat(document.getElementById('goalWeight').value);
+  const ft = document.getElementById('heightFeet').value;
+  const alert = document.getElementById('step1Alert');
+  if(!ft||!wt||!gw){ alert.textContent='Please fill in all fields.'; alert.classList.add('show'); return; }
+  if(wt<100||wt>1300){ alert.textContent='Weight must be between 100 and 1300 lbs.'; alert.classList.add('show'); return; }
+  if(gw>=wt){ alert.textContent='Goal weight should be less than current weight.'; alert.classList.add('show'); return; }
+  alert.classList.remove('show');
+  formData.weight = wt; formData.goalWeight = gw; formData.bmi = calcBMI();
+  nextStep();
+}
+function validateStep2(){
+  const sex = document.querySelector('#sexGroup .bubble.selected');
+  const month = document.getElementById('dobMonth').value;
+  const day = document.getElementById('dobDay').value;
+  const year = document.getElementById('dobYear').value;
+  if(!sex||!month||!day||!year){ alert('Please complete all fields.'); return; }
+  formData.sex = sex.dataset.value;
+  formData.dob = `${month} ${day}, ${year}`;
+  nextStep();
+}
+function validateStep3(){
+  const checked = document.querySelectorAll('#disqualifiers .check-item.checked');
+  if(!checked.length){ alert('Please select at least one option.'); return; }
+  formData.disqualifiers = [...checked].map(c=>c.dataset.value);
+  nextStep();
+}
+function validateStep4(){
+  const checked = document.querySelectorAll('#conditions .check-item.checked');
+  if(!checked.length){ alert('Please select at least one option.'); return; }
+  formData.conditions = [...checked].map(c=>c.dataset.value);
+  nextStep();
+}
+function validateStep5(){
+  const oSel = document.querySelector('#opiateGroup .yn-btn.selected');
+  const sSel = document.querySelector('#surgeryGroup .yn-btn.selected');
+  const rSel = document.querySelector('#rxGroup .yn-btn.selected');
+  if(!oSel||!sSel||!rSel){ alert('Please answer all questions.'); return; }
+  nextStep();
+}
+function validateStep6(){
+  const bp = document.querySelector('#bpGroup .check-item.checked');
+  const hr = document.querySelector('#hrGroup .check-item.checked');
+  if(!bp||!hr){ alert('Please select both blood pressure and heart rate.'); return; }
+  formData.bp = bp.dataset.value;
+  formData.hr = hr.dataset.value;
+  nextStep();
+}
+
+// ─── Step 9 (pace) pre-fill ───
+const origShowStep = showStep;
+showStep = function(n){
+  origShowStep(n);
+  if(n===8){
+    // Calculate pace
+    const w = formData.weight||220;
+    const g = formData.goalWeight||170;
+    const minLoss = (w*0.015).toFixed(1);
+    const maxLoss = (w*0.02).toFixed(1);
+    const weeks = Math.ceil((w-g)/parseFloat(minLoss));
+    document.getElementById('paceMin').textContent = minLoss;
+    document.getElementById('paceMax').textContent = maxLoss;
+    document.getElementById('paceWeeks').textContent = weeks;
+    formData.estWeeks = weeks;
+    // Reset to sub-screen A
+    document.getElementById('paceA').classList.add('active');
+    document.getElementById('paceB').classList.remove('active');
+  }
+  if(n===9){
+    // Fill summary
+    document.getElementById('sumBMI').textContent = formData.bmi||'--';
+    document.getElementById('sumWeight').textContent = (formData.weight||'--')+' lbs';
+    document.getElementById('sumGoal').textContent = (formData.goalWeight||'--')+' lbs';
+    document.getElementById('sumWeeks').textContent = (formData.estWeeks||'--')+' wks';
+  }
+  if(n===10){
+    const fn = document.getElementById('firstName').value;
+    if(fn) document.getElementById('contactHeader').textContent = fn+', how can you be reached if necessary?';
+  }
+};
+
+function validateStep9(){
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  const st = document.getElementById('stateSelect').value;
+  if(!fn||!ln||!st){ alert('Please fill in all fields.'); return; }
+  formData.firstName = fn; formData.lastName = ln; formData.state = st;
+  // Update contact header
+  document.getElementById('contactHeader').textContent = fn+', how can you be reached if necessary?';
+  nextStep();
+}
+
+// ─── Phone formatting ───
+document.getElementById('phoneInput').addEventListener('input',function(e){
+  let v = e.target.value.replace(/\D/g,'');
+  if(v.length>10) v=v.slice(0,10);
+  if(v.length>=7) v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6);
+  else if(v.length>=4) v='('+v.slice(0,3)+') '+v.slice(3);
+  else if(v.length>=1) v='('+v;
+  e.target.value = v;
+});
+
+// ─── Email .con check ───
+document.getElementById('emailInput').addEventListener('input',function(){
+  const v = this.value;
+  document.getElementById('emailAlert').classList.toggle('show', v.endsWith('.con'));
+});
+
+// ─── Submit ───
+function submitForm(){
+  const email = document.getElementById('emailInput').value.trim();
+  const phone = document.getElementById('phoneInput').value.trim();
+  const hipaa = document.getElementById('hipaaConsent').checked;
+  const sms = document.getElementById('smsConsent').checked;
+  if(!email||!phone){ alert('Please enter your email and phone number.'); return; }
+  if(!email.includes('@')){ alert('Please enter a valid email address.'); return; }
+  if(!hipaa){ alert('Please consent to the HIPAA agreement to continue.'); return; }
+
+  formData.email = email;
+  formData.phone = phone;
+  formData.hipaaConsent = hipaa;
+  formData.smsConsent = sms;
+
+  // Collect remaining data
+  formData.allergyDetails = document.getElementById('allergyText')?.value||'';
+  formData.opiateDetails = document.getElementById('opiateText')?.value||'';
+  formData.surgeryDetails = document.getElementById('surgeryText')?.value||'';
+  formData.rxDetails = document.getElementById('rxText')?.value||'';
+  formData.priorMedDetails = document.getElementById('priorMedText')?.value||'';
+  formData.programDetails = document.getElementById('programText')?.value||'';
+
+  console.log('=== BIMINI SPRING INTAKE FORM DATA ===');
+  console.log(JSON.stringify(formData, null, 2));
+
+  document.getElementById('thankYouName').textContent =
+    `${formData.firstName}, your application has been submitted successfully!`;
+  showStep(11);
+}
+
+// ─── Init ───
+updateProgress();
+</script>
+</body>
+</html>
